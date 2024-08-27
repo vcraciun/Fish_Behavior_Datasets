@@ -5,6 +5,7 @@ import numpy as np
 import sys
 import datetime
 import time
+import random
 
 FPS = 59.9
 
@@ -125,10 +126,48 @@ def process_all_in_path(path_to_jsons, layout):
     
     json.dump(performance, open("performance.json", 'w'))
 
+def process_random_traces(path_to_jsons, layout):
+    traces = [
+        os.path.join(path_to_jsons, trace)
+        for trace in os.listdir(path_to_jsons)
+        if trace.endswith(".json")
+    ]
+
+    indexes = []    
+    for i in range(20):
+        while True:
+            el = random.choice(range(len(traces)))
+            if el not in indexes:
+                break
+        indexes += [el+1]
+    
+    recording_times = []
+    processing_times = []
+    names = []
+    for index in indexes:        
+        name = f"Trial{index:>02}"
+        for trace in traces:
+            if name in trace:
+                break
+        proc, rec = simulate(trace, layout, True)
+        processing_times += [proc]
+        recording_times += [rec]
+        names += [trace]
+
+    performance = list(zip(names, recording_times, processing_times))
+    json.dump(performance, open("random_performance.json", 'w'))
+
 if __name__ == "__main__":
     if len(sys.argv) == 1 or len(sys.argv) > 3:
         print("No tracking json file specified !!!")
     elif len(sys.argv) == 2:
-        simulate(sys.argv[1], box_coords_2, True)
+        proc, rec = simulate(sys.argv[1], box_coords_2, True)
+        print(f"Processing time: {proc}")
+        print(f"Recording time: {rec}")
     elif len(sys.argv) == 3:
-        process_all_in_path(sys.argv[1], box_coords_2)
+        if sys.argv[2] == "all_linear":
+            process_all_in_path(sys.argv[1], box_coords_2)
+        elif sys.argv[2] == "random":
+            process_random_traces(sys.argv[1], box_coords_2)
+        #elif sys.argv[2] == "all_paralel":
+        #    process_all_paralel(sys.argv[1], box_coords_2)
