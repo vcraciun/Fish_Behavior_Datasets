@@ -136,9 +136,9 @@ def process_random_traces(path_to_jsons, layout, count):
     indexes = []    
     while len(indexes) != count:
         while True:
-            el = random.choice(range(len(traces)))
-            if el+1 not in indexes:
-                indexes += [el+1]
+            el = random.choice(range(len(traces))) + 1
+            if el not in indexes:
+                indexes += [el]
                 break        
     
     recording_times = []
