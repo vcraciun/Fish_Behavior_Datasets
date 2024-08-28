@@ -126,7 +126,7 @@ def process_all_in_path(path_to_jsons, layout):
     
     json.dump(performance, open("performance.json", 'w'))
 
-def process_random_traces(path_to_jsons, layout):
+def process_random_traces(path_to_jsons, layout, count):
     traces = [
         os.path.join(path_to_jsons, trace)
         for trace in os.listdir(path_to_jsons)
@@ -134,12 +134,12 @@ def process_random_traces(path_to_jsons, layout):
     ]
 
     indexes = []    
-    for i in range(20):
+    while len(indexes) != count:
         while True:
             el = random.choice(range(len(traces)))
-            if el not in indexes:
-                break
-        indexes += [el+1]
+            if el+1 not in indexes:
+                indexes += [el+1]
+                break        
     
     recording_times = []
     processing_times = []
@@ -168,6 +168,6 @@ if __name__ == "__main__":
         if sys.argv[2] == "all_linear":
             process_all_in_path(sys.argv[1], box_coords_2)
         elif sys.argv[2] == "random":
-            process_random_traces(sys.argv[1], box_coords_2)
+            process_random_traces(sys.argv[1], box_coords_2, 20)
         #elif sys.argv[2] == "all_paralel":
         #    process_all_paralel(sys.argv[1], box_coords_2)
