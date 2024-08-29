@@ -115,16 +115,16 @@ def process_all_in_path(path_to_jsons, layout):
         for trace in os.listdir(path_to_jsons)
         if trace.endswith(".json")
     ]
-
     recording_times = []
     processing_times = []
+    names = []
     for trace in traces:
         proc, rec = simulate(trace, layout, False)
         processing_times += [proc]
         recording_times += [rec]
-    performance = list(zip(recording_times, processing_times))
-    
-    json.dump(performance, open("performance.json", 'w'))
+        names += [trace]
+    performance = list(zip(names, recording_times, processing_times))    
+    json.dump(performance, open("all_performance.json", 'w'))
 
 def process_random_traces(path_to_jsons, layout, count):
     traces = [
@@ -165,7 +165,7 @@ if __name__ == "__main__":
         print(f"Processing time: {proc}")
         print(f"Recording time: {rec}")
     elif len(sys.argv) == 3:
-        if sys.argv[2] == "all_linear":
+        if sys.argv[2] == "all":
             process_all_in_path(sys.argv[1], box_coords_2)
         elif sys.argv[2] == "random":
             process_random_traces(sys.argv[1], box_coords_2, 20)
