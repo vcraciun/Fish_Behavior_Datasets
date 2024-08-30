@@ -119,6 +119,7 @@ def process_all_in_path(path_to_jsons, layout):
     processing_times = []
     names = []
     for trace in traces:
+        print(trace)
         proc, rec = simulate(trace, layout, False)
         processing_times += [proc]
         recording_times += [rec]
