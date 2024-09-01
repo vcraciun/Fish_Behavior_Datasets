@@ -1,6 +1,8 @@
 import json
 from matplotlib import pyplot as plt
 import numpy as np
+import pandas as pd
+import seaborn as sns
 
 def random_performance():
     data = json.load(open('random_performance.json', 'r'))
@@ -37,6 +39,7 @@ def all_performance():
     data = json.load(open('all_performance.json', 'r'))
     rec = [int(el[2]) for el in data]
     proc = [int(el[1]) for el in data]
+    print(sum(rec), sum(proc))
     diffs = [proc[i] - rec[i] for i in range(len(rec))]
 
     ind1 = np.arange(len(data)) 
@@ -47,13 +50,24 @@ def all_performance():
     plt.ylabel('Performance diff', fontweight ='bold', fontsize = 20)
     plt.savefig("all_performance.png", bbox_inches='tight', dpi=300)
 
+    plt.gcf().subplots_adjust(wspace=1, hspace=1)
+    df = pd.DataFrame()
+    df["Video Processing Performance"] = diffs
+    print(df.describe())
+    fig = plt.figure(figsize=(6, 6), linewidth=3)
+    sns.boxplot(y='Video Processing Performance', data=df, color='#99c2a2')
+    sns.swarmplot(y="Video Processing Performance", data=df, color='#7d0013')      
+    #df.plot(kind='box', subplots=False, sharex=True, sharey=True, linewidth=3, figsize=[6,6], fontsize=20)
+    plt.grid(axis='y')
+    plt.savefig('performance_box-plot.png', dpi=600)
+
     diffs = [round(proc[i] - rec[i], 2) for i in range(len(data))]
     avg_dif = round(np.mean(diffs),2)
     avg_rec = round(np.mean(rec),2)
     print(diffs)
     print(avg_rec, avg_dif)
     per = round(avg_dif / (avg_rec / 100), 2)
-    print(per)    
+    print(per, "%")
 
 if __name__ == "__main__":
     all_performance()
