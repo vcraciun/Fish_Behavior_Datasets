@@ -177,7 +177,7 @@ def process_recording(fisier):
     d5 = list(df[df["box"] == "D2"]["dir"])
     d6 = list(df[df["box"] == "E1"]["dir"])
     d7 = list(df[df["box"] == "E2"]["dir"])
-
+    
     summary = [
         round(df[df["box"] == "B1"]["dst_cm"].sum(), 2),
         round(df[df["box"] == "B2"]["dst_cm"].sum(), 2),
@@ -185,7 +185,7 @@ def process_recording(fisier):
         round(df[df["box"] == "D1"]["dst_cm"].sum(), 2),
         round(df[df["box"] == "D2"]["dst_cm"].sum(), 2),
         round(df[df["box"] == "E1"]["dst_cm"].sum(), 2),
-        round(df[df["box"] == "E2"]["dst_cm"].sum(), 2),
+        round(df[df["box"] == "E2"]["dst_cm"].sum(), 2),             
 
         round(box.count("B1") / 59.9, 2),
         round(box.count("B2") / 59.9, 2),
@@ -268,7 +268,7 @@ def process_recording(fisier):
         round(d7.count(5) / 100, 2),
         round(d7.count(6) / 100, 2),
         round(d7.count(7) / 100, 2),
-        round(d7.count(8) / 100, 2),
+        round(d7.count(8) / 100, 2)
     ]
 
     box_trans_timig = pd.DataFrame()
@@ -450,8 +450,8 @@ def plot_csv(df, name):
     ax[1].grid(axis='y')
     plt.savefig(f"{name}_by_sum_all.png", bbox_inches='tight', dpi=300)
     #----------------------------------------------------------------------
-    for i in range(3, 9):
-        _KMeans(df, i, name)
+    #for i in range(3, 9):
+    #    _KMeans(df, i, name)
     #----------------------------------------------------------------------
     df1 = df.drop(df.columns[[0,8,9,10]], axis=1)
     plt.gcf().subplots_adjust(wspace=1, hspace=1)
