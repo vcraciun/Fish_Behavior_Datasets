@@ -332,18 +332,21 @@ def process_jsons(subjects):
         path_to_src = os.path.join("traces", subject)
         path_to_dst = os.path.join("traces_csv", subject)
         zebra_traces = [os.path.join(path_to_src, file) for file in os.listdir(path_to_src)]        
-        features_header = ["name", "dst_cm_B1", "dst_cm_B2", "dst_cm_C", "dst_cm_D1", "dst_cm_D2", "dst_cm_E1", "dst_cm_E2",
-            "time_B1", "time_B2", "time_C", "time_D1", "time_D2", "time_E1", "time_E2",
-            "sharps_B1", "sharps_B2", "sharps_C", "sharps_D1", "sharps_D2", "sharps_E1", "sharps_E2", 
-            "speed_cms_mean", "speed_cms_max",
-            "wall_hit_B1B2", "wall_hit_B2C", "wall_hit_CD1", "wall_hit_D1D2", "wall_hit_CE1", "wall_hit_E1E2",            
-            "dirs_1_B1", "dirs_2_B1", "dirs_3_B1", "dirs_4_B1", "dirs_5_B1", "dirs_6_B1", "dirs_7_B1", "dirs_8_B1",
-            "dirs_1_B2", "dirs_2_B2", "dirs_3_B2", "dirs_4_B2", "dirs_5_B2", "dirs_6_B2", "dirs_7_B2", "dirs_8_B2",
-            "dirs_1_C", "dirs_2_C", "dirs_3_C", "dirs_4_C", "dirs_5_C", "dirs_6_C", "dirs_7_C", "dirs_8_C",
-            "dirs_1_D1", "dirs_2_D1", "dirs_3_D1", "dirs_4_D1", "dirs_5_D1", "dirs_6_D1", "dirs_7_D1", "dirs_8_D1",
-            "dirs_1_D2", "dirs_2_D2", "dirs_3_D2", "dirs_4_D2", "dirs_5_D2", "dirs_6_D2", "dirs_7_D2", "dirs_8_D2",
-            "dirs_1_E1", "dirs_2_E1", "dirs_3_E1", "dirs_4_E1", "dirs_5_E1", "dirs_6_E1", "dirs_7_E1", "dirs_8_E1",
-            "dirs_1_E2", "dirs_2_E2", "dirs_3_E2", "dirs_4_E2", "dirs_5_E2", "dirs_6_E2", "dirs_7_E2", "dirs_8_E2"]
+        features_header = [
+            "name",             
+            "dst_cm_B1",        "dst_cm_B2",    "dst_cm_C",     "dst_cm_D1",    "dst_cm_D2",    "dst_cm_E1",    "dst_cm_E2",
+            "time_B1",          "time_B2",      "time_C",       "time_D1",      "time_D2",      "time_E1",      "time_E2",
+            "sharps_B1",        "sharps_B2",    "sharps_C",     "sharps_D1",    "sharps_D2",    "sharps_E1",    "sharps_E2", 
+            "speed_cms_mean",   "speed_cms_max",
+            "wall_hit_B1B2",    "wall_hit_B2C", "wall_hit_CD1", "wall_hit_D1D2","wall_hit_CE1", "wall_hit_E1E2",            
+            "dirs_1_B1",        "dirs_2_B1",    "dirs_3_B1",    "dirs_4_B1",    "dirs_5_B1",    "dirs_6_B1",    "dirs_7_B1", "dirs_8_B1",
+            "dirs_1_B2",        "dirs_2_B2",    "dirs_3_B2",    "dirs_4_B2",    "dirs_5_B2",    "dirs_6_B2",    "dirs_7_B2", "dirs_8_B2",
+            "dirs_1_C",         "dirs_2_C",     "dirs_3_C",     "dirs_4_C",     "dirs_5_C",     "dirs_6_C",     "dirs_7_C",  "dirs_8_C",
+            "dirs_1_D1",        "dirs_2_D1",    "dirs_3_D1",    "dirs_4_D1",    "dirs_5_D1",    "dirs_6_D1",    "dirs_7_D1", "dirs_8_D1",
+            "dirs_1_D2",        "dirs_2_D2",    "dirs_3_D2",    "dirs_4_D2",    "dirs_5_D2",    "dirs_6_D2",    "dirs_7_D2", "dirs_8_D2",
+            "dirs_1_E1",        "dirs_2_E1",    "dirs_3_E1",    "dirs_4_E1",    "dirs_5_E1",    "dirs_6_E1",    "dirs_7_E1", "dirs_8_E1",
+            "dirs_1_E2",        "dirs_2_E2",    "dirs_3_E2",    "dirs_4_E2",    "dirs_5_E2",    "dirs_6_E2",    "dirs_7_E2", "dirs_8_E2"
+        ]
         features_table = []
         for fisier in zebra_traces:
             _, fname = os.path.split(fisier)
