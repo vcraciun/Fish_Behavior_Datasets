@@ -1,5 +1,5 @@
 # Fish Behavior Datasets
-Zebrafish and Caras motion tracking datasets for behavior analysis and classification
+Zebrafish and Goldfish motion tracking datasets for behavior analysis and clustering.
 
 <table><tr>
 <tr>
