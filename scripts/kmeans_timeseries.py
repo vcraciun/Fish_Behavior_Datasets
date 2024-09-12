@@ -144,7 +144,7 @@ def kshape_kmeans(X_train, seed, specie, clusters, y_test, y_train, X_test):
     rows = best_n_clusters // 2 
     cols = 2
     
-    plt.subplots(rows,cols,figsize =((best_n_clusters//rows)*3,rows*3))
+    fig, ax = plt.subplots(rows,cols,figsize =((best_n_clusters//rows)*3,rows*3))
     for yi in range(best_n_clusters):
         plt.subplot(rows,cols,yi+1)
         for xx in X_train[y_pred == yi]:
@@ -154,6 +154,8 @@ def kshape_kmeans(X_train, seed, specie, clusters, y_test, y_train, X_test):
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
     plt.suptitle(f"{specs[specie]} Train", fontsize=20)
+    fig.supxlabel("Number of features (resampled to 40)", fontsize=20)
+    fig.supylabel("Individual feature values", fontsize=20)
     plt.tight_layout()
     plt.savefig(f"K-Means_train_{specie}.png", bbox_inches='tight', dpi=600)
 
@@ -163,7 +165,7 @@ def kshape_kmeans(X_train, seed, specie, clusters, y_test, y_train, X_test):
 
     toate = list(y_pred)
 
-    plt.subplots(rows,cols,figsize =((best_n_clusters//rows)*3,rows*3))
+    fig, ax = plt.subplots(rows,cols,figsize =((best_n_clusters//rows)*3,rows*3))
     for yi in range(best_n_clusters):
         plt.subplot(rows,cols,yi+1)
         for xx in X_test[y_pred == yi]:
@@ -172,7 +174,9 @@ def kshape_kmeans(X_train, seed, specie, clusters, y_test, y_train, X_test):
         plt.legend(fontsize=16)
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
-    plt.suptitle(f"{specs[specie]} Test", fontsize=20)
+    plt.suptitle(f"{specs[specie]} Test", fontsize=20)    
+    fig.supxlabel("Number of features (resampled to 40)", fontsize=20)
+    fig.supylabel("Individual feature values", fontsize=20)
     plt.tight_layout()
     plt.savefig(f"K-Means_test_{specie}.png", bbox_inches='tight', dpi=600)
 
@@ -215,11 +219,13 @@ def plot_silhouette_score(specie):
     plt.plot([x_dba], [max_dba], "or", linewidth=3)
     plt.plot([x_dtw], [max_dtw], "or", linewidth=3)
     plt.plot([x_ksh], [max_ksh], "or", linewidth=3)
-    plt.legend(fontsize=16)
+    plt.legend(fontsize=20)
     plt.grid()
     plt.title(f"K-Means silhouette analysis : {silhouette[specie][4]}", fontsize=20)
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
+    plt.xlabel("Number of possible clusters", fontsize=20)
+    plt.ylabel("Silhouette value / cluster count", fontsize=20)
     plt.tight_layout()
     plt.savefig(f"K-Means_{specie}_silhouette.png", bbox_inches='tight', dpi=600)
 
@@ -240,7 +246,7 @@ def process_specie(specie, clusters):
     X_test = TimeSeriesScalerMeanVariance().fit_transform(X_test)
     X_test = TimeSeriesResampler(sz=40).fit_transform(X_test)
 
-    #plot_silhouette_score(specie)
+    plot_silhouette_score(specie)
 
     #euclidian_kmeans(X_train, seed, clusters)
     #dba_kmeans(X_train, seed, clusters)
